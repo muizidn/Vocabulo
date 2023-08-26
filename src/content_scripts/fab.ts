@@ -52,4 +52,4 @@ export function createFab(language: Language) {
     document.body.appendChild(floatingButton);
 }
 
-createFab(Language.CHINESE);
+createFab(Language.CYRILLIC);
