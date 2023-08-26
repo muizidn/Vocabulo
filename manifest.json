@@ -1,18 +1,19 @@
 {
-  "manifest_version": 3,
-  "name": "CRXJS React Vite Example",
-  "version": "1.0.0",
-  "action": { "default_popup": "index.html" },
-  "permissions": [
-    "scripting",
-    "activeTab"
-  ],
-  "content_scripts": [
-    {
-      "js": ["src/content_scripts/fab.ts"],
-      "matches": [
-        "<all_urls>"
-      ]
-    }
-  ]
-}
+    "manifest_version": 3,
+    "name": "Honyaku",
+    "version": "1.0.0",
+    "action": { "default_popup": "index.html" },
+    "permissions": [
+      "scripting",
+      "activeTab"
+    ],
+    "content_scripts": [
+      {
+        "js": ["src/content_scripts/main.tsx"],
+        "matches": [
+          "<all_urls>"
+        ]
+      }
+    ]
+  }
+  
