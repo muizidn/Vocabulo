@@ -3,6 +3,7 @@ export enum Language {
     JAPANESE = "Japanese",
     ARABIC = "Arabic",
     CYRILLIC = "Cyrillic",
+    HINDI = "Hindi",
     OTHER = "Other"
 }
 
@@ -16,6 +17,8 @@ export function getRegexForLanguage(language: Language): RegExp {
             return /[\u0600-\u06FF]/;
         case Language.CYRILLIC:
             return /[\u0400-\u04FF]/;
+        case Language.HINDI: // Add Hindi regex
+            return /[\u0900-\u097F]/;
         default:
             return /./; // Match any character for "Other"
     }
