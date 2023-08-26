@@ -2,13 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import FloatingButton from './FloatingButton'
 import { languageDetector } from './languageDetector';
+import FAB2 from './FAB2';
 
 function Fab() {
     const language = languageDetector();
 
     return (
         <div>
-            <FloatingButton language={language} />
+            <FAB2></FAB2>
+            {/* <FloatingButton language={language} /> */}
         </div>
     );
 }
