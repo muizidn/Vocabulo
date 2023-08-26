@@ -28,3 +28,20 @@
 .floating-button:hover {
   opacity: 1.0;
 }
+
+.original-text {
+  border-bottom-width: 1rem;
+}
+
+.translation-text {
+  border-radius: 10px;
+  background-color: red;
+  font-size: x-small;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.translation-container {
+  display: flex;
+  flex-direction: column;
+}
