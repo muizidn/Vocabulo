@@ -23,3 +23,16 @@ export function getRegexForLanguage(language: Language): RegExp {
             return /./; // Match any character for "Other"
     }
 }
+
+export function detectLanguage(text: string): Language {
+    const languages = Object.values(Language);
+
+    for (const language of languages) {
+        const regex = getRegexForLanguage(language);
+        if (regex.test(text)) {
+            return language;
+        }
+    }
+
+    return Language.OTHER;
+}

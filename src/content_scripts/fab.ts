@@ -1,6 +1,8 @@
 import { Language } from './language';
 import '../style.css';
 import translateBody from './translateBody';
+import { languageDetector } from './languageDetector';
+import fabHtml from './fab.html?raw'
 
 export function createFab(language: Language) {
     const floatingButton = document.createElement('button');
@@ -52,4 +54,5 @@ export function createFab(language: Language) {
     document.body.appendChild(floatingButton);
 }
 
-createFab(Language.CYRILLIC);
+const language = languageDetector();
+createFab(language)
