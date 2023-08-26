@@ -1,15 +1,12 @@
 import './style.css';
-
-// Create the floating button element
+import translateBody from './translateBody';
 
 const floatingButton = document.createElement('button');
 floatingButton.innerText = '🇬🇧';
-floatingButton.classList.add('floating-button'); // Apply your own CSS styles
+floatingButton.classList.add('floating-button');
 
-// Set the click event for the button
 floatingButton.addEventListener('click', () => {
-    // Handle the button click action here
-    console.log('Floating button clicked');
+    translateBody()
 });
 
 let isDragging = false;
