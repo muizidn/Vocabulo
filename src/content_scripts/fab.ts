@@ -1,5 +1,5 @@
 import { Language } from './language';
-import './style.css';
+import '../style.css';
 import translateBody from './translateBody';
 
 export function createFab(language: Language) {

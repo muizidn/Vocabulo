@@ -3,9 +3,13 @@
   "name": "CRXJS React Vite Example",
   "version": "1.0.0",
   "action": { "default_popup": "index.html" },
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
   "content_scripts": [
     {
-      "js": ["src/fab.ts"],
+      "js": ["src/content_scripts/fab.ts"],
       "matches": [
         "https://gitee.com/*",
         "https://ndtv.in/*",

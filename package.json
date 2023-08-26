@@ -2,12 +2,14 @@
   "name": "translator",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.244",
     "typescript": "^4.5.4",
     "vite": "^2.9.15"
   },
