@@ -7,6 +7,14 @@ export function createFab(language: Language) {
     floatingButton.innerText = '🇬🇧';
     floatingButton.classList.add('floating-button');
 
+    // Load saved position from localStorage
+    const savedPosition = localStorage.getItem('floatingButtonPosition');
+    if (savedPosition) {
+        const { x, y } = JSON.parse(savedPosition);
+        floatingButton.style.left = `${x}px`;
+        floatingButton.style.top = `${y}px`;
+    }
+
     floatingButton.addEventListener('click', () => {
         translateBody(language)
     });
@@ -30,6 +38,9 @@ export function createFab(language: Language) {
 
             floatingButton.style.left = `${x}px`;
             floatingButton.style.top = `${y}px`;
+
+            // Save current position to localStorage
+            localStorage.setItem('floatingButtonPosition', JSON.stringify({ x, y }));
         }
     });
 
@@ -39,7 +50,6 @@ export function createFab(language: Language) {
 
     // Append the button to the document body
     document.body.appendChild(floatingButton);
-
 }
 
-createFab(Language.CHINESE)
+createFab(Language.CHINESE);
