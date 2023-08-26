@@ -11,12 +11,7 @@
     {
       "js": ["src/content_scripts/fab.ts"],
       "matches": [
-        "https://ya.ru/*",
-        "https://gitee.com/*",
-        "https://ndtv.in/*",
-        "https://www.google.com/*",
-        "https://qiita.com/*",
-        "https://arabic.cnn.com/*"
+        "<all_urls>"
       ]
     }
   ]
