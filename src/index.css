@@ -40,15 +40,44 @@ code {
 }
 
 .original-text {
-  text-decoration: underline indigo;
-  text-underline-offset: 8px;
-  display: block;
+  position: relative;
+  display: inline-block;
+  padding-right: 8px; /* Create space for the dot */
+  text-decoration: none; /* Remove default underline */
+}
+
+.original-text::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px; /* Adjust dot size as needed */
+  height: 4px;
+  background-color: indigo; /* Dot color */
+  border-radius: 50%; /* Make the dot circular */
+  transform-origin: center;
+  animation: pulsate 2s infinite;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
 }
 
 .original-text:hover {
-  text-decoration: none;
-  text-underline-offset: 8px; 
+  text-decoration: underline indigo;
 }
+
 
 .original-text:hover .translated-text {
   opacity: 1.0;
