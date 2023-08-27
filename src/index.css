@@ -39,24 +39,17 @@ code {
   opacity: 1.0;
 }
 
-.original-text-value::before {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  background-color: indigo;
-  bottom: 0;
-  left: 0;
-  animation: expandUnderline 3s ease-in-out;
-}
-
-@keyframes expandUnderline {
+@keyframes underlineOpacity {
   0%, 100% {
-    width: 0;
+    text-decoration: underline rgba(76, 0, 130, 0);
   }
   50% {
-    width: 100%;
+    text-decoration: underline indigo;
   }
+}
+
+.original-text-value {
+  animation: underlineOpacity 3s ease-in-out;
 }
 
 .original-text-value:hover {
