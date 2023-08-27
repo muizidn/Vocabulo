@@ -33,12 +33,16 @@ function traverseNode(node: Node, language: Language): boolean {
 }
 
 async function prepareNodeForTranslation(node: Node): Promise<void> {
-    if (node instanceof Element && node.classList.contains('original-text')) {
+    if (node instanceof Element && node.classList.contains('original-text-container')) {
         return;
     }
 
     const id = self.crypto.randomUUID();
     translationDict[id] = (translatedText) => {
+        const originalText = document.createElement('span');
+        originalText.classList.add('original-text-value');
+        originalText.textContent = node.nodeValue;
+
         const translatedSpan = document.createElement('span');
         translatedSpan.classList.add('translated-text');
         translatedSpan.textContent = translatedText;
@@ -48,8 +52,7 @@ async function prepareNodeForTranslation(node: Node): Promise<void> {
 
         const parent = node.parentElement;
         if (parent) {
-            parent.classList.add("original-text")
-            
+            parent.classList.add('original-text-container');
             let rect = parent.getBoundingClientRect();
             // console.log("node for",
             //     parent.offsetLeft,
@@ -68,6 +71,7 @@ async function prepareNodeForTranslation(node: Node): Promise<void> {
             wrapperDiv.appendChild(translatedSpan);
 
             parent.insertBefore(wrapperDiv, node.nextSibling);
+            parent.replaceChild(originalText, node)
         }
     };
     const translated = await translateChineseToEnglishOne(node.parentElement?.textContent || '');
