@@ -43,15 +43,23 @@ code {
   border-bottom-width: 1rem;
 }
 
-.translation-text {
+.translated-text {
   border-radius: 10px;
-  background-color: red;
+  background-color: indigo;
   font-size: x-small;
   padding-right: 10px;
   padding-left: 10px;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
 }
 
-.translation-container {
+.translated-text:hover {
+  opacity: 1.0;
+  z-index: 1000;
+}
+
+.translation-wrapper {
+  position: absolute;
   display: flex;
   flex-direction: column;
 }

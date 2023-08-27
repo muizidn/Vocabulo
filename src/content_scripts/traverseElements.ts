@@ -26,26 +26,32 @@ function traverseNode(node: Node, language: Language): void {
     }
 }
 
-function wrapWithTranslation(text: string, translatedText: string): string {
-    return `
-  <span class="original-text">${text}</span>
-  <span class="translation-text">${translatedText}</span>
-`;
-}
-
 async function prepareNodeForTranslation(node: Node): Promise<void> {
     if (node instanceof Element && node.classList.contains('original-text')) {
         return;
     }
-    
+
     const id = self.crypto.randomUUID();
     translationDict[id] = (translatedText) => {
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = wrapWithTranslation(node.nodeValue || '', translatedText);
-        wrapper.classList.add('translation-container');
-        if (node.parentNode) {
-            node.parentNode.replaceChild(wrapper, node);
-        }
+        const translatedSpan = document.createElement('span');
+        translatedSpan.classList.add('translated-text');
+        translatedSpan.textContent = translatedText;
+
+        const wrapperDiv = document.createElement('div');
+        wrapperDiv.classList.add('translation-wrapper');
+
+        (node as HTMLElement).onscroll = () => {
+            let rect = (node as HTMLElement).getBoundingClientRect();
+            let x = rect.left;
+            let y = rect.top;
+            translatedSpan.style.left = `${x}px`;
+            translatedSpan.style.top = `${y}px`;
+            translatedSpan.style.width = `${rect.width}px`;
+            translatedSpan.style.height = `${rect.height}px`;
+        };
+
+        wrapperDiv.appendChild(translatedSpan);
+        node.parentNode?.insertBefore(wrapperDiv, node.nextSibling);
     };
     const translated = await translateChineseToEnglishOne(node.nodeValue || '');
     translationDict[id](translated);
