@@ -7,27 +7,25 @@ export default function createDraggableContainer(id: string, container: HTMLElem
     // Load initial position from localStorage
     const savedPositionJSON = localStorage.getItem("draggableElementPosition");
     const savedPosition = savedPositionJSON ? JSON.parse(savedPositionJSON) : null;
+    me.style.right = '10px';
     if (savedPosition) {
-        me.style.left = savedPosition.x;
         me.style.top = savedPosition.y;
+    } else {
+        me.style.bottom = '10px';
     }
 
     let isDragging = false;
-    let offsetX = 0;
     let offsetY = 0;
 
     me.addEventListener("mousedown", (e) => {
         isDragging = true;
-        offsetX = e.clientX - me.getBoundingClientRect().left;
         offsetY = e.clientY - me.getBoundingClientRect().top;
-        console.log("dragging", offsetX,offsetY);
     });
 
     document.addEventListener("mousemove", (e) => {
         if (isDragging) {
-            const x = e.clientX - offsetX;
             const y = e.clientY - offsetY;
-            me.style.left = `${x}px`;
+            me.style.right = `10px`;
             me.style.top = `${y}px`;
         }
     });
