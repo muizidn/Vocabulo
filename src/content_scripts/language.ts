@@ -1,38 +1,73 @@
 export enum Language {
-    CHINESE = "Chinese",
-    JAPANESE = "Japanese",
-    ARABIC = "Arabic",
-    CYRILLIC = "Cyrillic",
-    HINDI = "Hindi",
-    OTHER = "Other"
+    Albanian = 'albanian',
+    Arabic = 'arabic',
+    Azerbaijani = 'azeri',
+    Bengali = 'bengali',
+    Bulgarian = 'bulgarian',
+    Cebuano = 'cebuano',
+    Croatian = 'croatian',
+    Czech = 'czech',
+    Danish = 'danish',
+    Dutch = 'dutch',
+    English = 'english',
+    Estonian = 'estonian',
+    Farsi = 'farsi',
+    Finnish = 'finnish',
+    French = 'french',
+    German = 'german',
+    Hausa = 'hausa',
+    Hawaiian = 'hawaiian',
+    Hindi = 'hindi',
+    Hungarian = 'hungarian',
+    Icelandic = 'icelandic',
+    Indonesian = 'indonesian',
+    Italian = 'italian',
+    Kazakh = 'kazakh',
+    Kyrgyz = 'kyrgyz',
+    Latin = 'latin',
+    Latvian = 'latvian',
+    Lithuanian = 'lithuanian',
+    Macedonian = 'macedonian',
+    Mongolian = 'mongolian',
+    Nepali = 'nepali',
+    Norwegian = 'norwegian',
+    Pashto = 'pashto',
+    Pidgin = 'pidgin',
+    Polish = 'polish',
+    Portuguese = 'portuguese',
+    Romanian = 'romanian',
+    Russian = 'russian',
+    Serbian = 'serbian',
+    Slovak = 'slovak',
+    Slovene = 'slovene',
+    Somali = 'somali',
+    Spanish = 'spanish',
+    Swahili = 'swahili',
+    Swedish = 'swedish',
+    Tagalog = 'tagalog',
+    Turkish = 'turkish',
+    Ukrainian = 'ukrainian',
+    Urdu = 'urdu',
+    Uzbek = 'uzbek',
+    Vietnamese = 'vietnamese',
+    Welsh = 'welsh',
 }
 
-export function getRegexForLanguage(language: Language): RegExp {
-    switch (language) {
-        case Language.CHINESE:
-            return /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/g;
-        case Language.JAPANESE:
-            return /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}\p{Script=Common}]/u;
-        case Language.ARABIC:
-            return /[\u0600-\u06FF]/;
-        case Language.CYRILLIC:
-            return /[\u0400-\u04FF]/;
-        case Language.HINDI: // Add Hindi regex
-            return /[\u0900-\u097F]/;
-        default:
-            return /./; // Match any character for "Other"
+function initializeLanguage(languageStr: string): Language | undefined {
+    const languageKey = languageStr.toLowerCase() as keyof typeof Language;
+    
+    if (languageKey in Language) {
+        return Language[languageKey];
+    } else {
+        return undefined;
     }
 }
 
 export function detectLanguage(text: string): Language {
-    const languages = Object.values(Language);
+    const lang = initializeLanguage('pidgin');
+    return lang ?? Language.English;
+}
 
-    for (const language of languages) {
-        const regex = getRegexForLanguage(language);
-        if (regex.test(text)) {
-            return language;
-        }
-    }
-
-    return Language.OTHER;
+export function isShouldTranslate(text: string): boolean {
+    return detectLanguage(text) == Language.English
 }

@@ -1,5 +1,5 @@
 import TranslatorService from "./TranslatorService";
-import { Language, getRegexForLanguage } from "./language";
+import { Language, isShouldTranslate } from "./language";
 
 const translationDict: { [id: string]: (translatedText: string) => void } = {};
 const service = new TranslatorService();
@@ -14,7 +14,7 @@ function traverseNode(node: Node, language: Language): void {
 
     if (node.nodeType === Node.TEXT_NODE) {
         const text = node.nodeValue?.trim();
-        if (text && text.match(getRegexForLanguage(language))) {
+        if (text && isShouldTranslate(text)) {
             prepareNodeForTranslation(node);
         }
     } else if (node.nodeType === Node.ELEMENT_NODE) {
