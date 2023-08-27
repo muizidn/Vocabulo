@@ -63,21 +63,24 @@ code {
   text-decoration: underline indigo;
 }
 
-
 .original-text-container:hover .translation-wrapper {
-  opacity: 1.0;
-  z-index: 10000;
+  opacity: 1;
 }
 
 .translated-text {
-  background-color: indigo;
+  background-color: rgba(76, 0, 130, 0.8);
   color: aliceblue;
 }
 
 .translation-wrapper {
   position: absolute;
-  display: flex;
+  display: none; /* Hide the wrapper by default */
   flex-direction: column;
-  opacity: 0.01;
+  opacity: 0; /* Start with 0 opacity */
   transition: opacity 0.3s ease-in-out;
+  z-index: 10000;
+}
+
+.original-text-container:hover .translation-wrapper {
+  display: flex; /* Show the wrapper on hover */
 }
