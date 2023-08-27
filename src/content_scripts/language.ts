@@ -68,6 +68,9 @@ export function detectLanguage(text: string): Language {
     return lang ?? Language.English;
 }
 
+const koreanPattern = /[\uAC00-\uD7AF\u1100-\u11FF\u3130-\u318F\uA960-\uA97F\uAC00-\uD7A3\uFFA1-\uFFDC]+/g;
+
 export function isShouldTranslate(text: string): boolean {
+    // return text.match(koreanPattern) !== null;
     return detectLanguage(text) == Language.English
 }

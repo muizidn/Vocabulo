@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { NextPage } from 'next';
+import JobPosting from './JobPosting';
 
 interface Localization {
   [key: string]: {
@@ -49,8 +50,7 @@ const Article: NextPage = () => {
       <h1 className="text-3xl font-bold mb-4">
         {localizations[language].title}
       </h1>
-      <p className="text-gray-600">{localizations[language].content}</p>
-      {/* You can add the markdown content rendering here */}
+      <JobPosting/>
     </div>
   );
 };
