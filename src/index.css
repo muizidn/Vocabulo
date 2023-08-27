@@ -13,9 +13,9 @@ body {
 
 
 .root-component-honyaku-draggable {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: fixed;
+  right: 100px;
+  bottom: 100px;
   height: 75px;
   width: 75px;
   z-index: 10000;
