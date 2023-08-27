@@ -40,7 +40,19 @@ code {
 }
 
 .original-text {
-  border-bottom-width: 1rem;
+  text-decoration: underline indigo;
+  text-underline-offset: 8px;
+  display: block;
+}
+
+.original-text:hover {
+  text-decoration: none;
+  text-underline-offset: 8px; 
+}
+
+.original-text:hover .translated-text {
+  opacity: 1.0;
+  z-index: 1000;
 }
 
 .translated-text {
@@ -50,14 +62,8 @@ code {
   transition: opacity 0.3s ease-in-out;
 }
 
-.translated-text:hover {
-  opacity: 1.0;
-  z-index: 1000;
-}
-
 .translation-wrapper {
   position: absolute;
   display: flex;
   flex-direction: column;
-  border-top: 2px solid indigo;
 }

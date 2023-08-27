@@ -48,6 +48,8 @@ async function prepareNodeForTranslation(node: Node): Promise<void> {
 
         const parent = node.parentElement;
         if (parent) {
+            parent.classList.add("original-text")
+            
             let rect = parent.getBoundingClientRect();
             // console.log("node for",
             //     parent.offsetLeft,
