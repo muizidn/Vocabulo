@@ -66,12 +66,17 @@ code {
 }
 
 .translation-wrapper {
-  position: absolute;
+  position: fixed;
   display: none; /* Hide the wrapper by default */
   flex-direction: column;
   opacity: 0; /* Start with 0 opacity */
   transition: opacity 0.3s ease-in-out;
   z-index: 10000;
+
+  /* always bottom center */
+  /* bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%); */
 }
 
 .original-text-container:hover .translation-wrapper {

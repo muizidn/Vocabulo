@@ -22,6 +22,7 @@ function traverseNode(node: Node, language: Language): boolean {
         }
     } else if (node.nodeType === Node.ELEMENT_NODE) {
         for (const childNode of node.childNodes) {
+            traverseNode(childNode, language)
             const canTraverseBecauseNotTranslatedYet = !(node as HTMLElement).classList.contains('original-text-container')
             const canTraverseBecauseParentIsNotTranslatedYet = !(node.parentElement?.classList.contains('original-text-container'))
             if (canTraverseBecauseNotTranslatedYet && canTraverseBecauseParentIsNotTranslatedYet) {
@@ -35,25 +36,24 @@ function traverseNode(node: Node, language: Language): boolean {
 }
 
 async function prepareNodeForTranslation(node: Node): Promise<void> {
-    node.parentElement?.classList.add('original-text-container')
-
     const id = self.crypto.randomUUID();
     translationDict[id] = (translatedText) => {
         const originalText = document.createElement('span');
         originalText.classList.add('original-text-value');
+        originalText.classList.add('original-text-container');
         originalText.textContent = node.nodeValue;
 
         const translatedSpan = document.createElement('span');
         translatedSpan.classList.add('translated-text');
         translatedSpan.textContent = translatedText;
 
-        const wrapperDiv = document.createElement('div');
+        const wrapperDiv = document.createElement('span');
         wrapperDiv.classList.add('translation-wrapper');
 
         const parent = node.parentElement;
         if (parent) {
-            parent.classList.add('original-text-container');
-            let rect = parent.getBoundingClientRect();
+            parent.replaceChild(originalText, node)
+            let rect = originalText.getBoundingClientRect();
             // console.log("node for",
             //     parent.offsetLeft,
             //     parent.offsetTop,
@@ -65,16 +65,21 @@ async function prepareNodeForTranslation(node: Node): Promise<void> {
             //     parent.nodeType,
             //     parent.nodeName
             // )
+            originalText.addEventListener('mouseover', () => {
+                let rect = originalText.getBoundingClientRect();
+                wrapperDiv.style.top = rect.top + rect.height + 2 + 'px';
+                wrapperDiv.style.left = rect.left + 'px';
+            });
             wrapperDiv.style.width = 'fit-content';
             wrapperDiv.style.maxWidth = `${rect.width}px`;
 
             wrapperDiv.appendChild(translatedSpan);
 
-            parent.insertBefore(wrapperDiv, node.nextSibling);
-            parent.replaceChild(originalText, node)
+            //parent.insertBefore(wrapperDiv, node.nextSibling);
+            originalText.appendChild(wrapperDiv)
         }
     };
-    const translated = await translateChineseToEnglishOne(node.parentElement?.innerText || '');
+    const translated = await translateChineseToEnglishOne(node.nodeValue || '');
     translationDict[id](translated);
 }
 
