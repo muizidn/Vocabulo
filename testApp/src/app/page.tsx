@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import JobPosting from './JobPosting';
+// import paragraph3Node from './eg.html'
 
 interface Localization {
   [key: string]: {
@@ -25,10 +26,16 @@ const localizations: Localization = {
 
 const Article: NextPage = () => {
   const [language, setLanguage] = useState('en'); // Default language is English
+  const [htmlContent, setHtmlContent] = useState(''); // Default language is English
 
   const handleLanguageChange = (newLanguage: string) => {
     setLanguage(newLanguage);
   };
+
+  useEffect(() => {
+    const content = require(`./eg.html`).default;
+    setHtmlContent(content)
+  }, [])
 
   return (
     <div className="p-[100px] flex flex-col items-center">
@@ -50,7 +57,8 @@ const Article: NextPage = () => {
       <h1 className="text-3xl font-bold mb-4">
         {localizations[language].title}
       </h1>
-      <JobPosting/>
+      {/* <JobPosting/> */}
+      <div dangerouslySetInnerHTML={{__html: htmlContent}}/>
     </div>
   );
 };
