@@ -34,25 +34,28 @@ function traverseNode(node: Node, language: Language): boolean {
     return false;
 }
 
+var wrapperDiv: HTMLSpanElement | null = null;
+var translatedSpan: HTMLSpanElement | null = null;
+
 async function prepareNodeForTranslation(node: Node): Promise<void> {
     const id = self.crypto.randomUUID();
     translationDict[id] = (translatedText) => {
-        const originalText = document.createElement('span');
-        originalText.classList.add('original-text-value');
-        originalText.classList.add('original-text-container');
-        originalText.textContent = node.nodeValue;
-
-        const translatedSpan = document.createElement('span');
-        translatedSpan.classList.add('translated-text');
-        translatedSpan.textContent = translatedText;
-
-        const wrapperDiv = document.createElement('span');
-        wrapperDiv.classList.add('translation-wrapper');
+        if (!translatedSpan) {
+            translatedSpan = document.createElement('span');
+            translatedSpan.classList.add('translated-text');
+        }
+        if (!wrapperDiv) {
+            wrapperDiv = document.createElement('span');
+            wrapperDiv.classList.add('translation-wrapper');
+            wrapperDiv.appendChild(translatedSpan);
+            wrapperDiv.style.width = 'fit-content';
+        }
 
         const parent = node.parentElement;
         if (parent) {
-            parent.replaceChild(originalText, node)
-            let rect = originalText.getBoundingClientRect();
+            parent.classList.add('original-text-container');
+            parent.classList.add('original-text-value');
+            let rect = parent.getBoundingClientRect();
             // console.log("node for",
             //     parent.offsetLeft,
             //     parent.offsetTop,
@@ -64,18 +67,24 @@ async function prepareNodeForTranslation(node: Node): Promise<void> {
             //     parent.nodeType,
             //     parent.nodeName
             // )
-            originalText.addEventListener('mouseover', () => {
-                let rect = originalText.getBoundingClientRect();
-                wrapperDiv.style.top = rect.top + rect.height + 2 + 'px';
-                wrapperDiv.style.left = rect.left + 'px';
+            parent.addEventListener('mouseover', () => {
+                translatedSpan!.textContent = translatedText;
+                let rect = parent.getBoundingClientRect();
+                wrapperDiv!.style.top = rect.top + rect.height + 2 + 'px';
+                wrapperDiv!.style.left = rect.left + 'px';
+                wrapperDiv!.style.maxWidth = `${rect.width + 100}px`;
+                wrapperDiv!.style.display = 'flex';
             });
-            wrapperDiv.style.width = 'fit-content';
-            wrapperDiv.style.maxWidth = `${rect.width}px`;
-
-            wrapperDiv.appendChild(translatedSpan);
+            parent.addEventListener('mouseout', () => {
+                wrapperDiv!.style.display = 'none';
+            })
 
             //parent.insertBefore(wrapperDiv, node.nextSibling);
-            originalText.appendChild(wrapperDiv)
+            // originalText.appendChild(wrapperDiv)
+        }
+
+        if (!wrapperDiv.parentElement) {
+            document.body.appendChild(wrapperDiv)
         }
     };
     const translated = await translateChineseToEnglishOne(node.nodeValue || '');

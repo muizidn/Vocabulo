@@ -56,22 +56,20 @@ code {
   text-decoration: underline indigo;
 }
 
-.original-text-container:hover .translation-wrapper {
-  opacity: 1;
-}
-
 .translated-text {
-  background-color: rgba(76, 0, 130, 0.8);
   color: aliceblue;
+  margin: 5px;
 }
 
 .translation-wrapper {
   position: fixed;
+  font-size: x-small;
   display: none; /* Hide the wrapper by default */
   flex-direction: column;
-  opacity: 0; /* Start with 0 opacity */
+  opacity: 1; /* Start with 0 opacity */
   transition: opacity 0.3s ease-in-out;
   z-index: 10000;
+  background-color: rgba(76, 0, 130, 0.8);
 
   /* always bottom center */
   /* bottom: 20px;
