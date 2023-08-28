@@ -74,7 +74,7 @@ async function prepareNodeForTranslation(node: Node): Promise<void> {
             parent.replaceChild(originalText, node)
         }
     };
-    const translated = await translateChineseToEnglishOne(node.parentElement?.textContent || '');
+    const translated = await translateChineseToEnglishOne(node.parentElement?.innerText || '');
     translationDict[id](translated);
 }
 
