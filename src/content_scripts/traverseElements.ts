@@ -18,12 +18,14 @@ function traverseNode(node: Node, language: Language): boolean {
         const text = node.nodeValue?.trim();
         if (text && isShouldTranslate(text)) {
             prepareNodeForTranslation(node);
-            return false;
+            return true;
         }
     } else if (node.nodeType === Node.ELEMENT_NODE) {
         for (const childNode of node.childNodes) {
-            if (!traverseNode(childNode, language)) {
-                continue;
+            const canTraverseBecuaseNotTranslatedYet = !(node as HTMLElement).classList.contains('original-text-container')
+            const canTraverseBecuaseParentIsNotTranslatedYet = !(node.parentElement?.classList.contains('original-text-container'))
+            if (canTraverseBecuaseNotTranslatedYet && canTraverseBecuaseParentIsNotTranslatedYet) {
+                traverseNode(childNode, language)
             }
         }
     } else {
@@ -33,9 +35,7 @@ function traverseNode(node: Node, language: Language): boolean {
 }
 
 async function prepareNodeForTranslation(node: Node): Promise<void> {
-    if (node instanceof Element && node.classList.contains('original-text-container')) {
-        return;
-    }
+    node.parentElement?.classList.add('original-text-container')
 
     const id = self.crypto.randomUUID();
     translationDict[id] = (translatedText) => {
