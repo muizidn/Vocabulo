@@ -22,7 +22,6 @@ function traverseNode(node: Node, language: Language): boolean {
         }
     } else if (node.nodeType === Node.ELEMENT_NODE) {
         for (const childNode of node.childNodes) {
-            traverseNode(childNode, language)
             const canTraverseBecauseNotTranslatedYet = !(node as HTMLElement).classList.contains('original-text-container')
             const canTraverseBecauseParentIsNotTranslatedYet = !(node.parentElement?.classList.contains('original-text-container'))
             if (canTraverseBecauseNotTranslatedYet && canTraverseBecauseParentIsNotTranslatedYet) {
