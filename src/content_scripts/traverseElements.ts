@@ -21,8 +21,8 @@ function traverseNode(node: Node, language: Language): boolean {
             return false;
         }
     } else if (node.nodeType === Node.ELEMENT_NODE) {
-        for (let i = 0; i < node.childNodes.length; i++) {
-            if (!traverseNode(node.childNodes[i], language)) {
+        for (const childNode of node.childNodes) {
+            if (!traverseNode(childNode, language)) {
                 continue;
             }
         }
